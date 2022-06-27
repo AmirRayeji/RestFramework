@@ -14,4 +14,4 @@ class ArticleDetail(DetailView):
 		return get_object_or_404(
 			Article.objects.filter(status=True),
 			pk=self.kwargs.get("pk")
-		)
+			)
