@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAdminUser
 
 from .serializers import ArticleSerializer, UserSerializer
 from blog.models import Article
+from .permissions import IsAuthorOrReadOnly, IsStaffOrReadOnly, IsSuperuserOrStaffReadOnly
 
 class ArticleList(ListCreateAPIView):
     queryset = Article.objects.all()
@@ -13,15 +14,16 @@ class ArticleList(ListCreateAPIView):
 class ArticleDetail(RetrieveUpdateDestroyAPIView):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
+    permission_classes = (IsStaffOrReadOnly, IsAuthorOrReadOnly,)
 
 
 class UserList(ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = (IsAdminUser,)
+    permission_classes = (IsSuperuserOrStaffReadOnly,)
 
 
 class UserDetail(RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = (IsAdminUser,)
+    permission_classes = (IsSuperuserOrStaffReadOnly,)
