@@ -1,12 +1,10 @@
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from django.contrib.auth.models import User
-#from rest_framework.views import APIView
-#from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 
 from .serializers import ArticleSerializer, UserSerializer
 from blog.models import Article
 from .permissions import IsAuthorOrReadOnly, IsStaffOrReadOnly, IsSuperuserOrStaffReadOnly
+
 
 class ArticleList(ListCreateAPIView):
     queryset = Article.objects.all()
@@ -29,11 +27,3 @@ class UserDetail(RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (IsSuperuserOrStaffReadOnly,)
-
-
-#class RevokeToken(APIView):
-    #permission_classes = (IsAuthenticated,)
-
-    #def delete(self, request):
-        #request.auth.delete()
-        #return Response(status=204)
