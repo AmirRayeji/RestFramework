@@ -10,6 +10,7 @@ from .permissions import IsAuthorOrReadOnly, IsStaffOrReadOnly, IsSuperuserOrSta
 class ArticleViewSet(ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
+    filterset_fields = ['status', 'author__username']
 
     def get_permissions(self):
     
